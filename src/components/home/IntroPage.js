@@ -9,27 +9,30 @@ const IntroPage = () => {
                         <div class="single-intro">
                             <h4 class="intro-title">
                                 <span class="intro-count">01</span>
-                                <a class="intro-cat" href="#file">Travel</a>
+                                <a class="intro-cat" href="#file">Du lịch</a>
                             </h4>
-                            <p>Sponsorships are like unicorns or leprechauns, talked about often but they don’t actually exist. There is only dollars and cents, the ...</p>
+                            <p>Với châm ngôn du lịch là thiên đường. Chúng tôi luôn hướng đến việc đa dạng nhữ chuyến du lịch lữ hành thú vị
+                            để tăng thêm sự lựa chọn cho khách du lịch.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="single-intro">
                             <h4 class="intro-title">
                                 <span class="intro-count">02</span>
-                                <a class="intro-cat" href="#file">Experience</a>
+                                <a class="intro-cat" href="#file">Trải nghiệm</a>
                             </h4>
-                            <p>My response is usually harsh. Offended at the suggestion that a career that’s taken more than a decade to create could be...</p>
+                            <p>Mục đích du lịch cũng với Pasadise hướng tới khách hàng của mình không chỉ tham qua, ăn uống vui chơi mà điều tâm đắc
+                            nhất của chúng tôi là trải nghiệm trong từng chuyến hành trình.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="single-intro">
                             <h4 class="intro-title">
                                 <span class="intro-count">03</span>
-                                <a class="intro-cat" href="#file">Relax</a>
+                                <a class="intro-cat" href="#file">Thư giãn</a>
                             </h4>
-                            <p>I have always made a living to make movies, never the other way around. When I first started I washed in a seafood restaurant....</p>
+                            <p>Nhằm mang đến những chuyến du lịch tuyệt với nhất và tạo được cảm giác thoải mái cho khách du lịch là một trong những châm ngôn
+                            phát triển của Pasadise</p>
                         </div>
                     </div>
                 </div>

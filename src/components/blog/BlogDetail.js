@@ -13,6 +13,8 @@ class BlogDetail extends Component {
                 <Header
                     history = {this.props.history}
                     islogin = {this.props.islogin}
+                    logout={() => this.props.logout()}
+                    allProvider = {this.props.allProvider}
                 />
                 <Breadcrumb name = 'Blog chi tiết' />
                 <div class="blog-area pd-top-120">
@@ -41,34 +43,34 @@ class BlogDetail extends Component {
                                 {/*details-gallery-start*/}
                                 <div class="gallery-area">
                                     <div class="containerss">
-                                        <div class="gallery-filter-area row custom-gutter">
+                                        <div class="gallery-filter-area row custom-gutter" style ={{position: 'relative', height: '388.047px'}}>
                                             <div class="gallery-sizer col-1"></div>
                                             {/*gallery-item*/}
-                                            <div class="tp-gallery-item col-md-4 col-sm-6 mb-10">
+                                            <div class="tp-gallery-item col-md-4 col-sm-6 mb-10" style ={{position: 'absolute', top: '0px', left : '0%'}}>
                                                 <div class="tp-gallery-item-img">
                                                     <img src="../assets/img/blog-details/2.png" alt="images_gallery1"/>
                                                 </div>
                                             </div>
                                             
-                                            <div class="tp-gallery-item col-md-4 col-sm-6">
+                                            <div class="tp-gallery-item col-md-4 col-sm-6" style ={{position: 'absolute', top: '0px', left : '33.2666%'}}>
                                                 <div class="tp-gallery-item-img">
                                                     <img src="../assets/img/blog-details/3.png" alt="images_gallery2"/>
                                                 </div>
                                             </div>
                                             
-                                            <div class="tp-gallery-item col-md-4 col-sm-6">
+                                            <div class="tp-gallery-item col-md-4 col-sm-6" style ={{position: 'absolute', top: '0px', left : '66.6541%'}}>
                                                 <div class="tp-gallery-item-img">
                                                     <img src="../assets/img/blog-details/4.png" alt="images_gallery3"/>
                                                 </div>
                                             </div>
                                             
-                                            <div class="tp-gallery-item col-md-4 col-sm-6">
+                                            <div class="tp-gallery-item col-md-4 col-sm-6" style ={{position: 'absolute', top: '192px', left : '33.2666%'}}>
                                                 <div class="tp-gallery-item-img">
                                                     <img src="../assets/img/blog-details/5.png" alt="images_gallery4"/>
                                                 </div>
                                             </div>
                                             
-                                            <div class="tp-gallery-item col-md-4 col-sm-6">
+                                            <div class="tp-gallery-item col-md-4 col-sm-6" style ={{position: 'absolute', top: '193px', left : '66.6541%'}}>
                                                 <div class="tp-gallery-item-img">
                                                     <img src="../assets/img/blog-details/6.png" alt="images_gallery5"/>
                                                 </div>

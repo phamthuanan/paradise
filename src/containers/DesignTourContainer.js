@@ -1,9 +1,16 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 import DesignTour from '../components/tour/DesignTour'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Component } from 'react'
+import axios from 'axios'
+import storeConfig from '../config/storage.config'
 import * as userActions from '../actions/user.action'
+import * as providerActions from '../actions/provider.actions'
+import * as tourActions from '../actions/tour.actions'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class DesignTourContainer extends Component{
     constructor(props){
@@ -12,14 +19,21 @@ class DesignTourContainer extends Component{
             nameTour : '',
             dateDepart : new Date(),
             dateReturn : new Date(),
-            qualityCustomers : 1,
             provider : '',
+            route : [],
+            messages : '',
+            description : '',
+            place_depart : '',
             notification: ''
         }
     }
 
     componentWillMount() {
         this.props.actions.auth()
+        this.props.providerActions.getAllProvider()
+        this.props.tourActions.getLocation()
+        this.props.tourActions.getProvince()
+
     }
 
     isvalidNameTour = (nameTour) => {
@@ -39,55 +53,132 @@ class DesignTourContainer extends Component{
             return false
         return true
     }
+    isvalidPlaceDepart = (placeDepart) => {
+        if(placeDepart === '')
+            return false
+        return true
+    }
 
-    designTourSubmit = (e) =>{
+    designTourSubmit = async (e) =>{
         e.preventDefault();
         if(!this.isvalidNameTour(this.state.nameTour)){
-            this.setState({notification : 'Tên tour không hợp lệ'})
+            toast.error("Tên tour không hợp lệ", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000
+              });
             return
         }
-        else this.setState({notification : ''})
 
         if(!this.isvalidDate(this.state.dateDepart, this.state.dateReturn)){
-            this.setState({notification : 'Ngày khởi hàng và ngày kết thúc không hợp lệ'})
+            toast.error("Ngày khởi hành và ngày kết thúc không hợp lệ", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000
+              });
             return
         }
-        else this.setState({notification : ''})
 
         if(!this.isvalidProvider(this.state.provider)){
-            this.setState({notification : 'Nhà cung cấp dịch vụ không hợp lệ'})
+            toast.error("Nhà cung cấp dịch vụ không hợp lệ", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000
+              });
             return
         }
         else this.setState({notification : ''})
+        if(!this.isvalidPlaceDepart(this.state.place_depart)){
+            toast.error("Nơi khởi hành không hợp lệ", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000
+              });
+            return
+        }
+        let res 
+        try {
+            res = await axios.post("http://localhost:8080/user/createtourdesign",{
+                user_id : storeConfig.getUser().id,
+                name_tour : this.state.nameTour,
+                provider_id : this.state.provider,
+                description : this.state.description,
+                time_start : this.state.dateDepart,
+                time_end : this.state.dateReturn,
+                place_depart : this.state.place_depart,
+                messages : this.state.messages,
+                route : this.state.route
+            })
+            
+        } catch (error) {
+            if (error.response.data.msg === "design tour fail"){
+                toast.error("Thiết kế tour không thành công - Quý khách vui lòng thử lại", {
+                    position: toast.POSITION.TOP_LEFT,
+                    autoClose: 5000
+                  });
+            }
+            return 
+        }
 
+        toast.success("Thiết kế tour thành công", {
+            position: toast.POSITION.TOP_LEFT,
+            autoClose: 5000
+          });
+        this.setState({
+            nameTour : '',
+            dateDepart : new Date(),
+            dateReturn : new Date(),
+            provider : '',
+            route : [],
+            messages : '',
+            description : '',
+            place_depart : ''
+        })
     }
     render(){
-        return(
-            <DesignTour
-                history = {this.props.history}
-                islogin = {this.props.islogin}
-                setNameTour = {(value) => this.setState({nameTour: value})}
-                departDate = {this.state.dateDepart}
-                setDepartDate = {(value) => this.setState({dateDepart: value})}
-                returnDate = {this.state.dateReturn}
-                setReturnDate = {(value) => this.setState({dateReturn: value})}
-                qualityCustomer = {this.state.qualityCustomers}
-                setQualityCustomer = {(value) => this.setState({qualityCustomers: value})}
-                setProvider = {(value) => this.setState({provider: value})}
-                notification = {this.state.notification}
-                designTourSubmit = {(e) => this.designTourSubmit(e)}
-            />
-        )
+        if(storeConfig.getUser()){
+                return(
+                    <div>
+                        <ToastContainer/>
+                        <DesignTour
+                            history = {this.props.history}
+                            islogin = {this.props.islogin}
+                            logout={() => this.props.actions.logout()}
+                            setNameTour = {(value) => this.setState({nameTour: value})}
+                            departDate = {this.state.dateDepart}
+                            setDepartDate = {(value) => this.setState({dateDepart: value})}
+                            returnDate = {this.state.dateReturn}
+                            setReturnDate = {(value) => this.setState({dateReturn: value})}
+                            setDescription = {(value) => this.setState({description : value})}
+                            setMessages = {(value) => this.setState({messages : value})}
+                            setProvider = {(value) => this.setState({provider: value})}
+                            setPlaceDepart = {(value) => this.setState({place_depart : value})}
+                            designTourSubmit = {(e) => this.designTourSubmit(e)}
+                            allProvider = {this.props.allProvider}
+                            location = {this.props.location}
+                            province = {this.props.province}
+                            route = {this.state.route}
+                            setRoute = {(value) => this.setState({route : value})}
+                        />
+                    </div>
+                
+            )
+        }
+        else{
+            return <Redirect to={"/"} />
+        }
+       
     }
 }
 
 const mapStateToProps = state => ({
-    islogin: state.userReducers.login.islogin
+    islogin: state.userReducers.login.islogin,
+    allProvider : state.providerReducers.provider.allprovider,
+    location : state.tourReducers.location.data,
+    province : state.tourReducers.province.province
 })
 
 const mapDispatchToProps = dispatch => {
     return ({
-        actions: bindActionCreators(userActions, dispatch)
+        actions: bindActionCreators(userActions, dispatch),
+        providerActions : bindActionCreators(providerActions, dispatch),
+        tourActions : bindActionCreators(tourActions, dispatch)
     })
 }
 

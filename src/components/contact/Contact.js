@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
 import Breadcrumb from '../breadcrumb/Breadcrumb'
 import NewLetter from '../newletter/Newletter'
 
-const  Contact = ({history,islogin,onSubmitContact,name,phone, email, messenges, setName, setPhone, setEmail, setMessenges, notification}) => {
+const  Contact = ({history,islogin,logout,onSubmitContact,name,phone, email, messenges, setName, setPhone, setEmail, setMessenges, allProvider}) => {
         return(
             <div>
                 <Header
                     history ={history}
                     islogin = {islogin}
+                    logout = {() => logout()}
+                    allProvider = {allProvider}
                 />
                 <Breadcrumb name = 'Liên hệ'/>
                 <div class="contact-area pd-top-108">
@@ -18,7 +20,7 @@ const  Contact = ({history,islogin,onSubmitContact,name,phone, email, messenges,
                             <div class="col-lg-6">
                                 <div class="section-title text-lg-center text-left">
                                     <h2 class="title">Liên hệ chúng tôi!</h2>
-                                    <p>Bạn có cần chúng tôi hay bạn cần nhu cần gì đặt biệt cần liên hệ trực tiếp với chúng tôi. Đừn ngần ngại, hãy hiện hệ và gửi thôn tin cho chúng tôi.</p>
+                                    <p>Bạn có cần chúng tôi hay bạn cần nhu cần gì đặt biệt cần liên hệ trực tiếp với chúng tôi. Đừng ngần ngại, hãy hiện hệ và gửi thôn tin cho chúng tôi.</p>
                                 </div>
                             </div>
                         </div>
@@ -31,12 +33,6 @@ const  Contact = ({history,islogin,onSubmitContact,name,phone, email, messenges,
                             <div class="col-xl-5 col-lg-6">
                                 <form class="tp-form-wrap">
                                     <div class="row">
-                                        {
-                                            (notification !== '') && (
-                                                 <div class="alert alert-success col-md-12" role="alert">{notification}</div>
-                                            )
-                                        }
-                                       
                                         <div class="col-md-6">
                                             <label class="single-input-wrap style-two">
                                                 <span class="single-input-title">Tên</span>

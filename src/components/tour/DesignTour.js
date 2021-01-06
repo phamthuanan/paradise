@@ -8,22 +8,34 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DesignTour = (
-    {history,islogin, setNameTour, departDate,returnDate,setDepartDate, setReturnDate,setQualityCustomer, setProvider,
-        qualityCustomer, notification, designTourSubmit }
+    {history,islogin,logout, setNameTour, departDate,returnDate,setDepartDate, setReturnDate,setProvider,
+      designTourSubmit, allProvider, location,province, setDescription,setMessages,setPlaceDepart, route,setRoute  }
     ) =>{
 
-    const [Province, setProvince] = useState('0');
     const [Location, setLocation] = useState('0')
+
     const [tags, setTag] = useState([0]);
     const addInputRouteTour = () => {
         var newInput = tags.length;
         setTag([...tags, newInput]);
+        addRoute()
+    }
+    const addRoute = () =>{
+        setRoute([
+            ...route,{
+                location_id: Location
+            }
+            
+        ])
+        console.log(Location + ' ' + route)
     }
         return(
             <div>
                 <Header
                     history = {history}
                     islogin = {islogin}
+                    logout = {()=>logout()}
+                    allProvider = {allProvider}
                 />
                 <Breadcrumb name="Thiết kế Tour"/>
                     <div className="component-design-tour">
@@ -35,11 +47,6 @@ const DesignTour = (
                                             <div className="col-md-12 col-sm-12 col-xl-12" style={{margin: "30px 0px 50px 0px"}}>
                                                 <h1 style={{fontSize:"auto",textAlign:"center"}}>Thiết kế tour</h1>
                                             </div>
-                                            {  notification !== ''  &&
-                                                <div class="alert alert-danger col-md-12 col-sm-12 col-xl-12" role="alert">
-                                                {notification}
-                                                </div>
-                                            }
                                             <div className=" form-group col-sm-12 col-xl-12 col-xl-12 col-md-12">
                                                 <input type="text" placeholder="Nhập tên tour" className="form-control" onChange={(e) => setNameTour(e.target.value)}/>
                                             </div>
@@ -55,7 +62,7 @@ const DesignTour = (
                                                 />
                                             </div>
                                             <div className=" form-group col-sm-12 col-xl-6 col-xl-6 col-md-6">
-                                                <label for="returndate">Ngày khởi hành</label>
+                                                <label for="returndate">Ngày kết thúc</label>
                                                 <DatePicker 
                                                     selected={returnDate}
                                                     onChange = {(date)=>{setReturnDate(date)}}
@@ -65,23 +72,28 @@ const DesignTour = (
                                                     id="returndate"
                                                 />
                                             </div>
-                                            <div className=" form-group col-sm-12 col-xl-3 col-xl-3 col-md-3">
-                                                <label for="quality">Số lượng người</label>
-                                                <input 
-                                                type="number" 
-                                                id="quality" 
-                                                onKeyDown={e => /[\+\-\.\,]$/.test(e.key) && e.preventDefault()} 
-                                                className="form-control" 
-                                                max="100" min="1"
-                                                value={qualityCustomer}
-                                                onChange={(e) => setQualityCustomer(e.target.value)}
-                                                />
+                                            <div className=" form-group col-sm-12 col-xl-6 col-xl-6 col-md-6">
+                                                <label for="company">Nơi khởi hành</label>
+                                                <select id="company" class="form-control" onChange = {(e) => setPlaceDepart(e.target.value)} >
+                                                    <option value="0">Chọn nơi khởi hành</option>
+                                                    { province.map((item, index) => {
+                                                        return(
+                                                            <option key = {index} value={item._id}>{item.name_province}</option>
+                                                        )
+                                                    })}
+                                                </select>
                                             </div>
-                                            <div className=" form-group col-sm-12 col-xl-9 col-xl-9 col-md-9">
+                                            <div className=" form-group col-sm-12 col-xl-6 col-xl-6 col-md-6">
                                                 <label for="company">Nhà cung cấp dịch vụ</label>
-                                                <select id="company" class="form-control" onChange={(e) => setProvider(e.target.value)}>
+                                                <select id="company" class="form-control" onChange = {(e) => setProvider(e.target.value)}>
                                                     <option value="0">Chọn nhà cung cấp dịch vụ</option>
-                                                    <option value="1">...</option>
+                                                    {allProvider.map((item, index) => {
+                                                        return(
+                                                            <option value={item._id} key = {index}>{item.name}</option>
+                                                        )
+                                                    }
+                                                    )}
+                                                    
                                                 </select>
                                             </div>
                                             <div className="col-md-12 col-sm-12 col-xl-12">
@@ -94,15 +106,14 @@ const DesignTour = (
                                                             <div><span style={{padding: "5px 12px 5px 12px",backgroundColor:" #f3941e",color: "white"}}>{index + 1}</span></div>
                                                             <div className="col-11">
                                                                 <div className="form-group col-12">
-                                                                <select id="company" class="form-control" value = {Province} onChange ={(e) =>setProvince(e.target.value)}>
-                                                                    <option value = '0'>Chọn Tỉnh, TP</option>
-                                                                    <option value="1">...</option>
-                                                                </select>
-                                                                </div>
-                                                                <div className="form-group col-12">
-                                                                    <select id="company" class="form-control" value = {Location} onChange ={(e) =>setLocation(e.target.value)}>
+                                                                    <select id="company" class="form-control" onChange ={(e) =>setLocation(e.target.value)}>
                                                                         <option value = '0'>Chọn Địa điểm</option>
-                                                                        <option value="1">...</option>
+                                                                        {location.map((item, index) => {
+                                                                            return(
+                                                                                <option value={item._id} key = {index}>{item.name_location}</option>
+                                                                            )
+                                                                        })}
+                                                                        
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -110,10 +121,20 @@ const DesignTour = (
                                                     </div>
                                                 ))
                                             }
-                                            
-                                            
                                             <div className="col-lg-12" style={{paddingTop: "30px", paddingBottom: "50px"}}>
                                                 <button class="btn btn-blue" type = "button" onClick={() => addInputRouteTour()}>+ Thêm lộ trình</button>
+                                            </div>
+                                            <div className="form-group col-md-12 col-sm-12">
+                                                <label for="description">Mô tả tour</label>
+                                                <textarea className="form-control" id="description" rows="7" onChange = {(e) => setDescription(e.target.value)}/>
+                                            </div>
+                                            <div className="form-group col-md-12 col-sm-12">
+                                                <label for="mess">Lời nhắn</label>
+                                                <textarea className="form-control" id="mess" rows="7" onChange = {(e) => setMessages(e.target.value)}/>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="agree" onClick = {() => addRoute()} required/>
+                                                <label class="form-check-label" for="agree"><b>TÔI XÁC NHẬN THIẾT KẾ TOUR</b></label>
                                             </div>
                                             <hr style={{width:"100%"}}/>
                                             <div className="col-12" style={{textAlign: "center"}}>

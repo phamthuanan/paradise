@@ -24,19 +24,9 @@ class SignInUp extends Component{
     
 
     render(){
-        let notificationRegister;
-        if(this.props.notificationRegister !== '' && this.props.notificationRegister !== 'Đăng ký thành công')
-            notificationRegister = <div class="alert alert-danger notificationRegister" role="alert">{this.props.notificationRegister}</div>
-        else
-            if(this.props.notificationRegister !== '' && this.props.notificationRegister === 'Đăng ký thành công')
-            notificationRegister = <div class="alert alert-success notificationRegister" role="alert">{this.props.notificationRegister}</div>
-        let notificationLogin;
-        if(this.props.notificationLogin !== '')
-            notificationLogin = <div class="alert alert-danger notificationLogin" role="alert">{this.props.notificationLogin}</div>
+        
         return(
             <div className = "conpoment-signinup">
-                {notificationRegister}
-                {notificationLogin}
                 <div class="container" id="container">
                     <div class="form-container sign-up-container">
                         <form>

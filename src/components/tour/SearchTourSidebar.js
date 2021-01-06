@@ -2,8 +2,7 @@ import React, {useState} from 'react'
 import DatePicker from "react-datepicker";
  
 import "react-datepicker/dist/react-datepicker.css";
-const SearchTourSidebar = () => {
-    const [DepartDate, setDepartDate] = useState(new Date());
+const SearchTourSidebar = ({setSearchText,setDateDepart,searchTextSubmit,location,dateDepart} ) => {
     const [ReturnDate, setReturnDate] = useState(new Date());
     return (
 
@@ -13,19 +12,21 @@ const SearchTourSidebar = () => {
                     <div class="widget-tour-list-meta">
                         <div class="single-widget-search-input-title"><i class="ti-location-pin"></i>Điểm đến</div>
                         <div class="single-widget-search-input">
-                        <select class="select w-100" style={{padding: "11px" ,border: "none",color: "gray",marginLeft: "5px"}}>
-                            <option value="0">Chọn điểm đến</option>
-                            <option value="2">Event Travel</option>
-                            <option value="3">Weekend Break</option>
-                            <option value="4">Package Holiday</option>
-                            <option value="5">Business Travel</option>
+                        <select class="select w-100" onChange = {(e) =>setSearchText(e.target.value)} style={{padding: "11px" ,border: "none",color: "gray",marginLeft: "5px"}}>
+                            {
+                                location.map((item,index) => {
+                                    return(
+                                        <option value={item.name_location} key = {index}>{item.name_location}</option>
+                                    )
+                                })
+                            }
                         </select>
                         </div>
                         <div class="single-widget-search-input-title"><i class="fa fa-calendar-minus-o"></i> Ngày khởi hành</div>
                         <div class="single-widget-search-input">
                         <DatePicker 
-                            selected={DepartDate}
-                            onChange = {(date)=>{setDepartDate(date)}}
+                            selected={dateDepart}
+                            onChange = {(date)=>{setDateDepart(date)}}
                             dateFormat="dd/MM/yyyy"
                             minDate={new Date()}
                             className="departing-date"
@@ -42,7 +43,7 @@ const SearchTourSidebar = () => {
                         />
                         </div>
                         <div style={{textAlign:"center"}}>
-                            <a class="btn btn-yellow" href="#file"><i class="ti-search" style={{fontSize: "13px"}}></i> Tìm kiếm</a>
+                            <button class="btn btn-yellow" onClick = {() =>searchTextSubmit()}><i class="ti-search" style={{fontSize: "13px"}}></i> Tìm kiếm</button>
                         </div>
                         
                     </div>

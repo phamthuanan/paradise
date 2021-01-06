@@ -7,37 +7,103 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const BookingTour = ({history, islogin}) =>{
+const BookingTour = (
+    {history, islogin, logout, allProvider,tourDetail,setNameUserBooking,setEmailUserBooking,
+         setPhoneUserBooking, setAddressUserBooking, setTotalPrice, setNumberOfCustomer,
+          setListCustomer,setPaymentMethods,totalPrice, listCustomer, setNote, submitBookingform }
+    
+    ) => {
 
     const [birthDate, setBirthday] = useState(null);
-    const [NumberCustomers, setNumberCustomer] = useState(['Người lớn']);
+    const [renderElement, setRenderElement] = useState(['Người lớn'])
+    const [TypeCustomers, setTypeCustomer] = useState('Người lớn');
+    const [NumberCustomers, setNumberCustomer] = useState(1);
     const [NumberAdults, setNumberAdult] = useState(1);
     const [NumberChilds, setNumberChild] = useState(0);
     const [NumberKids, setNumberKid] = useState(0);
     const [NumberSmallKids, setNumberSmallKids] = useState(0);
+    const [InforCustomer, setInforCustomer] = useState({
+        name : '',
+        gender : '',
+        identify : '',
+        type_age : TypeCustomers
+    })
+
+    const handleChange = e => {
+        const { name, value} = e.target;
+        setInforCustomer(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
     
-    
-    const HandleNumberAdultsChange = (event) =>{
+    const HandleNumberAdultsChange = (event) => {
         setNumberAdult(event.target.value);
-        setNumberCustomer([...NumberCustomers, 'Người lớn']);
+        setNumberCustomer(NumberCustomers + 1);
+        setRenderElement([...renderElement, 'Người lớn'])
+        setTypeCustomer('Người lớn')
+        setInforCustomer(prevState => ({
+            ...prevState,
+            type_age: TypeCustomers
+        }));
+        doTotalprice(tourDetail.price)
+        addListCustomer(listCustomer)
     }
     const HandleNumberChildsChange = (event) =>{
         setNumberChild(event.target.value);
-        setNumberCustomer([...NumberCustomers, 'Trẻ em']);
+        setNumberCustomer(NumberCustomers + 1);
+        setRenderElement([...renderElement, 'Trẻ em'])
+        setTypeCustomer('Trẻ em')
+        doTotalprice(parseInt(tourDetail.price / 1.3))
+        addListCustomer(listCustomer)
     }
     const HandleNumberKidChange = (event) =>{
         setNumberKid(event.target.value);
-        setNumberCustomer([...NumberCustomers, 'Trẻ nhỏ']);
+        setNumberCustomer(NumberCustomers + 1);
+        setRenderElement([...renderElement, 'Trẻ nhỏ'])
+        setTypeCustomer('Trẻ nhỏ')
+        addListCustomer(listCustomer)
     }
     const HandleNumberSmallKidChange = (event) =>{
         setNumberSmallKids(event.target.value);
-        setNumberCustomer([...NumberCustomers, 'Em bé']);
+        setNumberCustomer(NumberCustomers + 1);
+        setRenderElement([...renderElement, 'Em bé'])
+        setTypeCustomer('Em bé')
+        addListCustomer(listCustomer)
+    }
+
+    const  changeBirthDay = (date) =>{
+        setBirthday(date)
+        setInforCustomer({
+            ...InforCustomer,
+            birthdate: date
+        });
+        setInforCustomer(prevState => ({
+            ...prevState,
+            type_age: TypeCustomers
+        }));
+        
+    }
+
+    const doTotalprice = (priceOfCustomer) => {
+        setTotalPrice(totalPrice + priceOfCustomer)
+    }
+    const addListCustomer = (listCustomer) => {
+        setNumberOfCustomer(NumberCustomers)
+        setListCustomer([
+            ...listCustomer,
+            InforCustomer
+        ])
+        console.log(listCustomer)
+        
     }
         return(
             <div>
                 <Header
                     history = {history}
                     islogin = {islogin}
+                    logout = {() => logout()}
+                    allProvider = {allProvider}
                 />
                 <Breadcrumb name="Đặt tour"/>
                 <div className="Componnetbuytour pd-top-100">
@@ -69,21 +135,21 @@ const BookingTour = ({history, islogin}) =>{
                                         <h3>Thông tin Tour</h3>
                                     </div>
                                     <div className="col-md-3 col-xl-3">
-                                        <img src="../assets/img/gallery/10.png" alt="img-tour" className="img-tour-booking"/>
+                                        <img src={tourDetail.image_cover} alt="img-tour" className="img-tour-booking"/>
                                     </div>
                                     <div className="col-md-9 col-xl-9">
                                         <div className="name-tour">
-                                            <span>Tên tour</span>
+                                            <span>{tourDetail.name_tour}</span>
                                         </div>
                                         <div style={{display:"flex"}}>
                                             <ul className="info-tour">
-                                                <li><i class="fas fa-barcode"></i> Mã tour</li>
-                                                <li><i class="fa fa-calendar-o"></i> Ngày khởi hàng: 1/12/2020</li>
-                                                <li><i class="fa fa-clock-o"></i> Số ngày: 4 ngày</li>
+                                                <li><i class="fas fa-barcode"></i> {tourDetail._id}</li>
+                                                <li><i class="fa fa-calendar-o"></i> Ngày khởi hành: {new Date(tourDetail.time_start).getDate() + '/' + new Date(tourDetail.time_start).getMonth() + 1 + '/' + new Date(tourDetail.time_start).getFullYear()}</li>
+                                                <li><i class="fa fa-clock-o"></i> Số ngày: 3 ngày</li>
                                             </ul>
                                             <ul className="info-tour">
-                                                <li><i class="fas fa-couch"></i> Số chỗ còn chận: 8</li>
-                                                <li>Giá <span style={{color: "orange", fontSize:"30px", fontWeight: "bold"}}>3,000,000</span> <small>VNĐ</small></li>
+                                                <li><i class="fas fa-couch"></i> Số chỗ còn chận: {tourDetail.capacity}</li>
+                                                <li>Giá <span style={{color: "orange", fontSize:"30px", fontWeight: "bold"}}>{tourDetail.price}</span> <small>VNĐ</small></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -112,8 +178,8 @@ const BookingTour = ({history, islogin}) =>{
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>2,700,500 đ</td>
-                                                    <td>1,970,000 đ</td>
+                                                    <td>{tourDetail.price} đ</td>
+                                                    <td>{parseInt(tourDetail.price / 1.3)} đ</td>
                                                     <td>0 đ</td>
                                                     <td>0 đ</td>
                                                     <td>600,000 đ</td>
@@ -136,19 +202,19 @@ const BookingTour = ({history, islogin}) =>{
                                                 <div className="col-md-6 col-sm-6">
                                                     <div className="form-group">
                                                         <label for="name">Họ và tên</label>
-                                                        <input type="text" className="form-control" id="name"/>
+                                                        <input type="text" className="form-control" id="name" onChange = {(e) => setNameUserBooking(e.target.value)}/>
                                                     </div>
                                                     <div className="form-group">
                                                         <label for="phone">Điện thoại</label>
-                                                        <input type="text" className="form-control" id="phone"/>
+                                                        <input type="text" className="form-control" id="phone" onChange = {(e) => setPhoneUserBooking(e.target.value)}/>
                                                     </div>
                                                     <div className="form-group">
                                                         <label for="Email">Email</label>
-                                                        <input type="email" className="form-control" id="email"/>
+                                                        <input type="email" className="form-control" id="email" onChange = {(e) => setEmailUserBooking(e.target.value)}/>
                                                     </div>
                                                     <div className="form-group">
                                                         <label for="address">Địa chỉ</label>
-                                                        <input type="text" className="form-control" id="address"/>
+                                                        <input type="text" className="form-control" id="address" onChange = {(e) => setAddressUserBooking(e.target.value)}/>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6 col-sm-6">
@@ -158,11 +224,11 @@ const BookingTour = ({history, islogin}) =>{
                                                         </div>
                                                         <div className="form-group col-md-3 col-sm-3">
                                                             <label for="adult">Người lớn</label>
-                                                            <input type="number" className="form-control" id="adult" min = "1" max="100" value={NumberAdults} onChange={(e) => HandleNumberAdultsChange(e)}/>
+                                                            <input type="number" className="form-control" id="adult" min = "1" max="100" value={NumberAdults} onChange={(e) => HandleNumberAdultsChange(e)} />
                                                         </div>
                                                         <div className="form-group col-md-2 col-sm-2">
                                                             <label for="child">Trẻ em</label>
-                                                            <input type="number" className="form-control" id="child" min = "0" max="100" value={NumberChilds} onChange={(e) => HandleNumberChildsChange(e)}/>
+                                                            <input type="number" className="form-control" id="child" min = "0" max="100" value={NumberChilds} onChange={(e) => HandleNumberChildsChange(e)} />
                                                         </div>
                                                         <div className="form-group col-md-2 col-sm-2">
                                                             <label for="kid">Trẻ nhỏ</label>
@@ -174,11 +240,11 @@ const BookingTour = ({history, islogin}) =>{
                                                         </div>
                                                         <div className="form-group col-md-2 col-sm-2">
                                                             <label for="number-customer">Số người</label>
-                                                            <input type="number" className="form-control" id="number-customer" disabled value={NumberCustomers.length}/>
+                                                            <input type="number" className="form-control" id="number-customer"  value={NumberCustomers} disabled/>
                                                         </div>
                                                         <div className="form-group col-md-12 col-sm-12">
                                                             <label for="note">Ghi chú</label>
-                                                            <textarea className="form-control" id="note" rows="7"/>
+                                                            <textarea className="form-control" id="note" rows="7" onChange= {(e) =>setNote(e.target.value)}/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -190,66 +256,75 @@ const BookingTour = ({history, islogin}) =>{
                                             <h3>Danh sách khách hàng</h3>
                                         </div>
                                         {
-                                            NumberCustomers.map((customer, index) =>(
+                                           
+                                            renderElement.map((item,index) => (
+                                                
                                                 <div className="col-md-12 col-xl-12 info-list-customer">
                                                     <h6 className="tittle-customer">Khách hàng {index + 1}</h6>
                                                     <div className="row">
                                                         <div className="col-xl-3 col-md-3">
                                                             <label for="name-customer">Họ và tên</label>
-                                                            <input type="text" className="form-control" id="name-customer"/>
+                                                            <input type="text" className="form-control" id="name-customer" name ="name" onChange = {handleChange}/>
                                                         </div>
                                                         <div className="col-xl-2 col-md-2">
                                                             <label for="gender">Giới tính</label>
-                                                            <select class="form-control" id="gender">
-                                                                <option value="1">Nam</option>
-                                                                <option value="0">Nữ</option>
+                                                            <select class="form-control" id="gender" name = "gender" onChange = {handleChange}>
+                                                                <option value="Nam">Nam</option>
+                                                                <option value="Nữ">Nữ</option>
                                                             </select>
                                                         </div>
                                                         <div className = "col-xl-2 col-md-2">
                                                             <label for="birthday">Ngày sinh</label>
                                                             <DatePicker 
                                                                 selected={birthDate}
-                                                                onChange = {(date)=>{setBirthday(date)}}
+                                                                onChange = {(date)=>changeBirthDay(date)}
                                                                 dateFormat="dd/MM/yyyy"
                                                                 className="form-control"
                                                                 id="birthday"
+                                                                peekNextMonth
+                                                                showMonthDropdown
+                                                                showYearDropdown
+                                                                dropdownMode="select"
                                                             />
                                                         </div>
                                                         <div className="col-xl-3 col-md-3">
                                                             <label for="card-id">CMND/Hộ chiếu</label>
-                                                            <input type="text" className="form-control" id="card-id"/>
+                                                            <input type="text" className="form-control" id="card-id" name = "identify" onChange = {handleChange}/>
                                                         </div>
                                                         <div className="col-xl-2 col-md-2">
                                                             <label for="age">Độ tuổi</label>
-                                                            <input type="text" className="form-control" id="age" value={customer} disabled/>
+                                                            <input type="text" className="form-control" id="age" value={item} disabled/>
                                                         </div>
                                                         <div className="col-xl-12 col-md-12 price-tour-booking">
                                                             <hr/>
-                                                            <span>Trị giá: <b style={{color:"orange"}}>2,750,000 đ</b></span>
+                                                            <span>Trị giá: <b style={{color:"orange"}}>{item === 'Người lớn'? tourDetail.price : item === 'Trẻ em' ? parseInt(tourDetail.price / 1.3) : 0 } VNĐ</b></span>
                                                         </div>
                                                     </div>  
                                                 </div>
-                                            ))
+                                            )
+                                            ) 
+                                            
+                                               
                                         }
                                         
                                         <div className="col-xl-12 col-md-12 price-tour-booking">
                                             <hr/>
-                                            <span>Tổng cộng: <b style={{color:"orange"}}>2,750,000 đ</b></span>
+                                            <span>Tổng cộng: <b style={{color:"orange"}}>{totalPrice === null ? tourDetail.price : totalPrice} VNĐ</b></span>
                                         </div>
                                     </div>
                                     <div className="row component-payment">
                                         <div className="title-infor-tour col-md-12 col-xl-12">
                                             <h3>Xin quý khách vui lòng chọn hình thức thanh toán</h3>
                                         </div>
-                                        <div className=" typepayment col-md-12 col-xl-12">
+                                        <div className=" typepayment col-md-12 col-xl-12" onChange = {(e) => setPaymentMethods(e.target.value)}>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" id="cash" value="cash"/>
+                                                <input class="form-check-input" type="radio" name="payment" id="cash" value="Tiền mặt"/>
                                                 <label class="form-check-label" for="cash">
                                                     Tiền mặt
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" id="transfer" value="transfer"  />
+                                                <input class="form-check-input" type="radio" name="payment" id="transfer" value="Chuyển khoản"  />
                                                 <label class="form-check-label" for="transfer">
                                                     Chuyển khoản
                                                 </label>
@@ -261,7 +336,7 @@ const BookingTour = ({history, islogin}) =>{
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" id="credit-card" value="credit-card"  />
+                                                <input class="form-check-input" type="radio" name="payment" id="credit-card" value="Thẻ tín dụng"  />
                                                 <label class="form-check-label" for="credit-card">
                                                     Thẻ tín dụng
                                                 </label>
@@ -383,7 +458,7 @@ const BookingTour = ({history, islogin}) =>{
                                             </div>
                                         </div>
                                         <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input" id="agree" />
+                                            <input type="checkbox" class="form-check-input" id="agree" onClick = {() => addListCustomer(listCustomer)} required/>
                                             <label class="form-check-label" for="agree">Tôi đồng ý với các điều kiện trên</label>
                                         </div>
                                     </div>
@@ -391,7 +466,7 @@ const BookingTour = ({history, islogin}) =>{
                             </form>
                         </div>
                         <div className="col-md-12 col-xl-12" style={{textAlign:"center"}}>
-                            <button type="button"  class="btn btn-yellow">Đặt tour <i class="fas fa-arrow-right"></i></button>
+                            <button type="button"  class="btn btn-yellow" onClick = {() => submitBookingform()}>Đặt tour <i class="fas fa-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>

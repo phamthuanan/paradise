@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Header from '../header/Header'
 import Footer from '../footer/Footer'
 import Breadcrumb from '../breadcrumb/Breadcrumb'
@@ -6,12 +6,39 @@ import NewLetter from '../newletter/Newletter'
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const ComfirmBooking = ({history,islogin}) => {
+const ComfirmBooking = ({history,islogin,logout, allProvider,booking,tourDetail }) => {
+    const [numeAdult, setNumAdult] = useState(0)
+    const [numChildren, setNumChildren] = useState(0)
+    const [numKid, setKid] = useState(0)
+    const [numeSmallKid, setNumeSmallKid] = useState(0)
+    useEffect(() => {
+        booking.list_customer.map(item => {
+            switch (item.type_age) {
+                case 'Người lớn':
+                    setNumAdult(numeAdult + 1)
+                    break;
+                case 'Trẻ em':
+                    setNumChildren(numChildren + 1)
+                    break;
+                case 'Trẻ nhỏ':
+                    setKid(numKid + 1)
+                    break;
+                case 'Em bé':
+                    setNumeSmallKid(numeSmallKid + 1)
+                    break;
+                default:
+                    break;
+            }
+        })
+       
+    }, [])
     return (
         <div>
             <Header
                 history = {history}
                 islogin = {islogin}
+                logout = {() => logout()}
+                allProvider = {allProvider}
             />
             <Breadcrumb name="Xác nhận đặt tour"/>
             <div className="page-comfirm-booking-tour pd-top-100">
@@ -40,6 +67,7 @@ const ComfirmBooking = ({history,islogin}) => {
                 <div className="col-md-12 col-xl-12">
                     <div className="container">
                         <div class="alert alert-success" role="alert" style={{textAlign:"center"}}>
+                        Đặt tour thành công.
                         Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi
                         </div>
                     </div>
@@ -55,7 +83,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Mã tour:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {tourDetail._id}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -63,7 +91,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Tên tour:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {tourDetail.name_tour}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -71,7 +99,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Lộ trình:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {tourDetail.name_tour}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -79,7 +107,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Ngày đi:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {new Date(tourDetail.time_start).getDate() + '/' + new Date(tourDetail.time_start).getMonth()+1 + '/' +new Date(tourDetail.time_start).getFullYear()}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -87,7 +115,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Ngày về:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {new Date(tourDetail.time_end).getDate() + '/' + new Date(tourDetail.time_end).getMonth()+1 + '/' +new Date(tourDetail.time_end).getFullYear()}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -95,7 +123,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Nơi khởi hành:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {tourDetail.place_depart}
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +136,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Họ và tên:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {booking.name_user_booking}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -116,7 +144,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Địa chỉ:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {booking.address_user_booking}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -124,7 +152,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Số điện thoại:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {booking.phone_user_booking}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -132,7 +160,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Email:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {booking.email_user_booking}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -140,7 +168,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Số khách:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        1 (Người lớn: 1  Trẻ em: 0  Trẻ nhỏ: 0  Em bé: 0)
+                                        {booking.number_of_customer} (Người lớn: {numeAdult}  Trẻ em: {numChildren}  Trẻ nhỏ: {numKid}  Em bé: {numeSmallKid})
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -148,7 +176,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Ghi chú:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        Thời hạn thanh toán 16/11/2020 11:53:11.
+                                        {booking.note}
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +197,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Số booking:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        <span style={{color:"orange", fontWeight:"bold"}}>201114160265</span> (Quý khách vui lòng nhớ số booking (Booking No) để thuận tiện cho các giao dịch sau này)
+                                        <span style={{color:"orange", fontWeight:"bold"}}>{booking._id}</span> (Quý khách vui lòng nhớ số booking (Booking No) để thuận tiện cho các giao dịch sau này)
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -177,7 +205,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Trị giá booking:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {booking.total_price}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -185,7 +213,8 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Ngày booking:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        NDSGN6125-013-191120XE-D-F
+                                        {new Date(booking.date_booking).getDate() + '/' + new Date(booking.date_booking).getMonth()+1 + '/' +new Date(booking.date_booking).getFullYear()}
+                                       
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -193,7 +222,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Hình thức thanh toán:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        Tiền mặt
+                                        {booking.payment_methods}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -201,7 +230,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Tình trạng:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        Đang chờ thanh toán
+                                        {booking.status_booking}
                                         </div>
                                     </div>
                                     <div className="row row-info-confirmation">
@@ -209,7 +238,7 @@ const ComfirmBooking = ({history,islogin}) => {
                                             <span>Ghi chú:</span>
                                         </div>
                                         <div className="col-sm-9 col-md-9 font500">
-                                        <span style={{color:"orange", fontWeight:"bold"}}>16/11/2020 11:53:11 (Theo giờ Việt Nam)</span> (Nếu quá thời hạn trên mà quý khách chưa thanh toán. Booking sẽ bị hủy)
+                                        <span style={{color:"orange", fontWeight:"bold"}}>{new Date(tourDetail.time_start).getDate() + '/' + new Date(tourDetail.time_start).getMonth()+1 + '/' +new Date(tourDetail.time_start).getFullYear()} 11:11:59(Theo giờ Việt Nam)</span> (Nếu quá thời hạn trên mà quý khách chưa thanh toán. Booking sẽ bị hủy)
                                         </div>
                                     </div>
                                 </div>
@@ -235,15 +264,20 @@ const ComfirmBooking = ({history,islogin}) => {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    {booking.list_customer.map((item, index) => {
+                                        return(
+                                            <tr key = {index}>
+                                                <td>{item.name}</td>
+                                                <td>{new Date(item.birthdate).getDate() + '/' + (new Date(item.birthdate).getMonth()+1) + '/' +new Date(item.birthdate).getFullYear()}</td>
+                                                <td>{item.gender}</td>
+                                                <td>{item.type_age}</td>
+                                                <td>{item.type_age === 'Người lớn' ? tourDetail.price : item.type_age === 'Trẻ em' ? tourDetail.price /1.3 : 0} VNĐ</td>
+                                            </tr>
+                                        )
+                                    })}
+                                        
                                         <tr>
-                                            <td>Phạm Thuận An</td>
-                                            <td>14/04/1999</td>
-                                            <td>Nam</td>
-                                            <td>Người lớn</td>
-                                            <td>3,750,000 đ</td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="5" style={{textAlign:"right"}}>Tổng giá trị: <span style={{color:"orange", fontWeight:"bold"}}>3,750,000 đ</span></td>
+                                            <td colSpan="5" style={{textAlign:"right"}}>Tổng giá trị: <span style={{color:"orange", fontWeight:"bold"}}>{booking.total_price} VNĐ</span></td>
                                         </tr>
                                     </tbody>
                                 </table>

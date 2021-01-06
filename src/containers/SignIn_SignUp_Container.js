@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import axios from 'axios'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as userActions from '../actions/user.action'
 
 import SignInSignUp from '../components/signin.signup/SignInUp'
@@ -17,9 +18,7 @@ class SignInSignUpContainer extends Component{
             password : '',
             name : '',
             phone: '',
-            address : '',
-            notificationRegister: '',
-            notificationLogin : ''
+            address : ''
         }
     }
 
@@ -63,34 +62,39 @@ class SignInSignUpContainer extends Component{
     registerSubmit = async (event) => {
         event.preventDefault();
         if (!this.isvalidEmail(this.state.email)) {
-            this.setState({ notificationRegister: "Email không hợp lệ" })
+            toast.error("Email không hợp lệ", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 5000
+              });
             return
-        } else {
-            this.setState({ notificationRegister: '' })
         }
         if (!this.isvalidPassword(this.state.password)) {
-            this.setState({ notificationRegister: 'Mật khẩu không hợp lệ - Mật khẩu phải từ 8 ký tự' })
+            toast.error("Mật không hợp lệ -Mật khẩu phải từ 8 ký tự", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 5000
+              });
             return
-        } else {
-            this.setState({ notificationRegister: '' })
-        }
+        } 
         if (!this.isvalidName(this.state.name)) {
-            this.setState({ notificationRegister: 'Tên không hợp lệ' })
+            toast.error("Tên không hợp lệ", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 5000
+              });
             return
-        } else {
-            this.setState({ notificationRegister: '' })
         }
         if (!this.isvalidPhone(this.state.phone)) {
-            this.setState({ notificationRegister: 'Số điện thoại không hợp lệ' })
+            toast.error("Số điện thoại không hợp lệ", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 5000
+              });
             return
-        } else {
-            this.setState({ notificationRegister: '' })
         }
         if (!this.isvalidAddress(this.state.address)) {
-            this.setState({ notificationRegister: 'Địa chỉ không hợp lệ' })
+            toast.error("Địa chỉ không hợp lệ", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 5000
+              });
             return
-        } else {
-            this.setState({ notificationRegister: '' })
         }
         try {
             await axios.post('http://localhost:8080/user/register', {
@@ -102,29 +106,45 @@ class SignInSignUpContainer extends Component{
             })
         }
         catch (err) {
-            if (err.response.data.msg === "Email đã được đăng ký tài khoản")
-                this.setState({ notificationRegister: 'Email đã được đăng ký tài khoản' })
-            else
-                this.setState({ notificationRegister: 'Đăng ký không thành công' })
+            if (err.response.data.msg === "Email already exist"){
+                toast.error("Email đã được đăng ký tài khoản", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 5000
+                  });
+            }
+            else{
+                toast.success("Đăng ký tài khoản thành công", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 5000
+                  });
+            }
             return
         }
-        this.setState({ notificationRegister: 'Đăng ký thành công' })
-
+        toast.success("Đăng ký tài khoản thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 5000
+          });
+        window.location.reload();
     }
 
     loginSubmit = async (event) => {
         event.preventDefault();
         if (!this.isvalidEmail(this.state.emailLogin)) {
+            toast.error("Email không hợp lệ", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000
+              });
             this.setState({ notificationLogin: "Email không hợp lệ" })
             return
         } else {
             this.setState({ notificationLogin: '' })
         }
         if (!this.isvalidPasswordLogin(this.state.passwordLogin)) {
-            this.setState({ notificationLogin: "Vui lòng nhập mật khẩu" })
+            toast.error("Vui lòng nhập mật khẩu", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000
+              });
             return
-        } else {
-            this.setState({ notificationLogin: '' })
         }
         let res
         try {
@@ -135,18 +155,27 @@ class SignInSignUpContainer extends Component{
         }
         catch (err) {
             if (err.response !== undefined) {
-                if (err.response.data.msg === "no_registration_confirmation")
-                    this.setState({ notificationLogin: 'Tài khoản chưa được kích hoạt' })
+                if (err.response.data.msg === "no_registration_confirmation"){
+                    toast.error("Tài khoản chưa được kích hoạt", {
+                        position: toast.POSITION.TOP_LEFT,
+                        autoClose: 5000
+                      });
+                }
                 else {
-                    this.setState({ notificationLogin: 'Email or password không hợp lệ' })
+                    toast.error("Email và mật khẩu không hợp lệ", {
+                        position: toast.POSITION.TOP_LEFT,
+                        autoClose: 5000
+                      });
                 }
             }
             else {
-                this.setState({ notificationLogin: 'Đăng nhập không thành công' })
+                toast.success("Đăng nhập thành công", {
+                    position: toast.POSITION.TOP_LEFT,
+                    autoClose: 5000
+                  });
             }
             return
         }
-        console.log(res)
         this.props.actions.loginSuccess(res.data.token, res.data.user)
         this.props.history.push('/')
 
@@ -155,20 +184,22 @@ class SignInSignUpContainer extends Component{
 
     render(){
         return(
-            <SignInSignUp
-                history = {this.props.history}
-                setEmailogin={(value) => this.setState({ emailLogin: value })}
-                setPasswordlogin={(value) => this.setState({ passwordLogin: value })}
-                setEmail={(value) => this.setState({ email: value })}
-                setName={(value) => this.setState({ name: value })}
-                setAddress={(value) => this.setState({ address: value })}
-                setPhone={(value) => this.setState({ phone: value })}
-                notificationRegister={this.state.notificationRegister}
-                notificationLogin={this.state.notificationLogin}
-                setPassword={(value) => this.setState({ password: value })}
-                registerSubmit={(e) => this.registerSubmit(e)}
-                loginSubmit={(e) => this.loginSubmit(e)}
-            />
+            <div>
+                <ToastContainer/>
+                <SignInSignUp
+                    history = {this.props.history}
+                    setEmailogin={(value) => this.setState({ emailLogin: value })}
+                    setPasswordlogin={(value) => this.setState({ passwordLogin: value })}
+                    setEmail={(value) => this.setState({ email: value })}
+                    setName={(value) => this.setState({ name: value })}
+                    setAddress={(value) => this.setState({ address: value })}
+                    setPhone={(value) => this.setState({ phone: value })}
+                    setPassword={(value) => this.setState({ password: value })}
+                    registerSubmit={(e) => this.registerSubmit(e)}
+                    loginSubmit={(e) => this.loginSubmit(e)}
+                />
+            </div>
+           
         )
     }
 }

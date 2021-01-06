@@ -15,13 +15,13 @@ const Footer = () => {
                                 <p>Chúng tôi luôn mong muốn luôn luôn cung cấp cho bạn những dịch vụ và trải nghiệm hoàn hảo và thú vị nhất.</p>
                                 <ul class="social-icon">
                                     <li>
-                                        <a class="facebook" href="https://www.facebook.com/codingeek.net/" target="_blank"><i class="fa fa-facebook  "></i></a>
+                                        <a class="facebook" href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook  "></i></a>
                                     </li>
                                     <li>
-                                        <a class="twitter" href="https://twitter.com/codingeeknet" target="_blank"><i class="fa fa-twitter  "></i></a>
+                                        <a class="twitter" href="https://twitter.com" target="_blank"><i class="fa fa-twitter  "></i></a>
                                     </li>
                                     <li>
-                                        <a class="pinterest" href="https://www.instagram.com/codingeeknet/" target="_blank"><i class="fa fa-instagram"></i></a>
+                                        <a class="pinterest" href="https://www.instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
                                     </li>
                                 </ul>
                         </div>
@@ -65,12 +65,12 @@ const Footer = () => {
                         <div class="footer-widget widget">
                             <h4 class="widget-title">Instagram Gallery</h4>
                             <ul class="widget-instagram-feed">
-                                <li><a href="#"><img src="../assets/img/instagram/1.png" alt="img"/></a></li>
-                                <li><a href="#"><img src="../assets/img/instagram/2.png" alt="img"/></a></li>
-                                <li><a href="#"><img src="../assets/img/instagram/3.png" alt="img"/></a></li>
-                                <li><a href="#"><img src="../assets/img/instagram/4.png" alt="img"/></a></li>
-                                <li><a href="#"><img src="../assets/img/instagram/5.png" alt="img"/></a></li>
-                                <li><a href="#"><img src="../assets/img/instagram/6.png" alt="img"/></a></li>
+                                <li><a href="/"><img src="../assets/img/instagram/1.png" alt="img"/></a></li>
+                                <li><a href="/"><img src="../assets/img/instagram/2.png" alt="img"/></a></li>
+                                <li><a href="/"><img src="../assets/img/instagram/3.png" alt="img"/></a></li>
+                                <li><a href="/"><img src="../assets/img/instagram/4.png" alt="img"/></a></li>
+                                <li><a href="/"><img src="../assets/img/instagram/5.png" alt="img"/></a></li>
+                                <li><a href="/"><img src="../assets/img/instagram/6.png" alt="img"/></a></li>
                             </ul>
                         </div>
                     </div>
@@ -78,7 +78,7 @@ const Footer = () => {
             </div>
             <div class="copyright-inner">
                 <div class="copyright-text">
-                    &copy; Bản quyền bởi <a href="https://codingeek.net/" target="_blank"><i class="fa fa-heart"></i><span>Codingeek.</span></a>
+                    &copy; Bản quyền bởi <a href="/"><i class="fa fa-heart"></i><span>Paradise.</span></a>
                 </div>
             </div>
         </footer>

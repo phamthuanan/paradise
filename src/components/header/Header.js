@@ -32,11 +32,10 @@ class Header extends Component{
       }
 
       handlelogin = () => {
-          console.log(this.props.islogin)
         if (this.props.islogin) {
           return (
             <li className="notification">
-                    <img src="../assets/img/team/1.png" alt="avatar" class='avatar-account '/>                  
+                    <img src ={storeConfig.getUser().avatar} alt="avatar" className='avatar-account '/>                  
                     <ul className = 'sub-profile'>
                         <li  onClick={() => {
                                     this.props.history.push("/profile/" + this.state.email);
@@ -125,16 +124,11 @@ class Header extends Component{
                         <li className="menu-item-has-children">
                             <Link to="/company">Công ty lữ hành</Link>
                             <ul className="sub-menu">
-                                <li><Link to="/company/vietravel">Vietravel</Link></li>
-                                <li><Link to="/company">SaiGonTourist</Link></li>
-                                <li><Link to="/company">Fiditour</Link></li>
-                                <li><Link to="/company">Du dịch Việt</Link></li>
-                                <li><Link to="/company">Bến Thành Tourist</Link></li>
-                                <li><Link to="/company">HaNoiTourist</Link></li>
-                                <li><Link to="/company">EXOTISSIMO</Link></li>
-                                <li><Link to="/company">VietNamTourism</Link></li>
-                                <li><Link to="/company">TST Tourist</Link></li>
-                                <li><Link to="/company">Buffalo Tours</Link></li>
+                                {this.props.allProvider.map((item, index) => {
+                                    return(
+                                        <li key = {index}><Link to ={'/company/' + item._id} >{item.name}</Link></li>
+                                    )
+                                })}
                             </ul>
                         </li>
                         <li>

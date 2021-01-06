@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
+import axios from 'axios'
 import Header from '../header/Header'
 import Banner from './Banner'
 import SearchTour from './SeacrhTour'
@@ -8,12 +10,16 @@ import Footer from '../footer/Footer'
 import NewLetter from '../newletter/Newletter'
 import CardTourDiscount from '../tour/CardTourDiscount'
 
-const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,departDate, returnDate}) => {
+const Home = ({history,islogin,logout, setDestination, setDepartDate, setReturnDate,departDate, returnDate, tour, discountTour,allProvider}) => {
+
+
     return (
         <div>
             <Header
                 history = {history}
                 islogin = {islogin}
+                logout = {() =>logout()}
+                allProvider = {allProvider}
             />
             <Banner />
             <SearchTour
@@ -37,21 +43,26 @@ const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,dep
                 <div >
                     <div class="container">
                         <div class="row">
-                            <div class="col-xl-4 col-lg-4 col-sm-12">
-                                <div class="d-list-slider-item">
-                                    <CardTourDiscount />
+                        {discountTour.map( (item, index) => {
+                            
+                            return (
+                                 <div class="col-xl-4 col-lg-4 col-sm-12">
+                                    <div class="d-list-slider-item">
+                                        <CardTourDiscount
+                                            key = {index}
+                                            nameTour = {item.name_tour}
+                                            departDate = {item.time_start}
+                                            capacity = {item.capacity}
+                                            price = {item.price}
+                                            image = {item.image_cover}
+                                            id = {item._id}
+                                            providerId = {item.provider_id}
+                                            
+                                         />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-sm-12">
-                                <div class="d-list-slider-item">
-                                    <CardTourDiscount />
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-sm-12">
-                                <div class="d-list-slider-item">
-                                    <CardTourDiscount />
-                                </div>
-                            </div>
+                            )
+                        })}
                         </div>
                     </div>
                 </div>
@@ -67,24 +78,29 @@ const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,dep
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3 col-sm-6">
-                            <TourCard />
-                        </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <TourCard />
-                        </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <TourCard />
-                        </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <TourCard />
-                        </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <TourCard />
-                        </div>
+                    {
+                        tour.map((item,index) => {
+                           
+                            return(
+                              <div class="col-lg-3 col-sm-6">
+                                <TourCard 
+                                    key = {index}
+                                    nameTour = {item.name_tour}
+                                    departDate = {item.time_start}
+                                    capacity = {item.capacity}
+                                    price = {item.price}
+                                    image = {item.image_cover}
+                                    placeDepart = {item.place_depart}
+                                    id = {item._id}
+                                    providerId = {item.provider_id}
+                                />
+                              </div>  
+                            )
+                        })
+                    }
                     </div>
                     <div className = 'col-xl-12' style={{textAlign: "center"}}>
-                        <a className="btn btn-yellow" href ="/tour">Xem thêm</a>
+                        <Link className="btn btn-yellow" to ="/tour">Xem thêm</Link>
                     </div>
                 </div>
             </div>
@@ -94,14 +110,14 @@ const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,dep
                         <div class="col-lg-6">
                             <div class="single-blog single-blog-wrap style-two">
                                 <div class="thumb single-blog-left-wrap">
-                                    <img src="../assets/img/blog/10.png" alt="blog"/>
+                                    <img src="../assets/img/blog/gia-tri-van-hoa-pho-co-hoi-an.jpg" alt="blog"/>
                                 </div>
                                 <div class="single-blog-details single-blog-right-wrap">
-                                    <a class="tag" href="#e">Europe</a>
-                                    <p class="date">19 September 2019</p>
-                                    <h4 class="title">Why You Shouldn’t Ride Elephants In France.</h4>
-                                    <p class="content">Kava contains 30 demos as for now, and we’re planning to release more! Except demos, Kava theme has more and more features for.. users, business, companies, developers, bloggers and other categories of users. Even if you are an absolute beginner</p>
-                                    <a class="btn btn-yellow" href="#e"><span>Read More<i class="la la-arrow-right"></i></span></a>
+                                    <a class="tag" href="#e">Hội An</a>
+                                    <p class="date">19/12/2020</p>
+                                    <h4 class="title">Du lịch Hội An khám phá giá trị văn hóa khu phố cổ</h4>
+                                    <p class="content">Kể từ khi Khu phố cổ Hội An được UNESCO công nhận là di sản văn hóa thế giới, Hội An trở thành một trong những điểm đến hấp dẫn nhất khu vực miền Trung. Du lịch Hội An làm say đắm lòng du khách bởi nét đẹp trường tồn cùng thời gian của các công trình kiến trúc, món ăn truyền thống, tâm hồn mộc mạc của người dân ở đây.</p>
+                                    <Link class="btn btn-yellow" to="/blog/du-lich-hoi-an-kham-pha-pho-co"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                 </div>
                             </div>
                         </div>
@@ -110,14 +126,14 @@ const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,dep
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/11.png" alt="blog"/>
+                                            <img src="../assets/img/blog/10-dia-diem.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
-                                                <a class="tag" href="#e">Europe</a>
-                                                <p class="date">19 September 2019</p>
-                                                <h4 class="title">Why You Shouldn’t Ride Elephants In Thailand</h4>
-                                                <a class="btn btn-yellow" href="#fie"><span>Read More<i class="la la-arrow-right"></i></span></a>
+                                                <a class="tag" href="#e">Thế giới</a>
+                                                <p class="date">16/10/2020</p>
+                                                <h4 class="title">10 ĐIỂM ĐẾN HẤP DẪN NHẤT THẾ GIỚI</h4>
+                                                <Link class="btn btn-yellow" to="/blog/10-diem-hap-dan-nhat-the-gioi"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>
@@ -125,14 +141,14 @@ const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,dep
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/12.png" alt="blog"/>
+                                            <img src="../assets/img/blog/48-gio-du-lich-ninh-thuan-vinh-vinh-hy.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
-                                                <a class="tag" href="#fie">Europe</a>
-                                                <p class="date">18 September 2019</p>
-                                                <h4 class="title">10 Best Highways for Romantic Long Drive</h4>
-                                                <a class="btn btn-yellow" href="#file"><span>Read More<i class="la la-arrow-right"></i></span></a>
+                                                <a class="tag" href="#fie">Ninh Thuận</a>
+                                                <p class="date">18/12/2020</p>
+                                                <h4 class="title">48 giờ khám phá những địa điểm du lịch Ninh Thuận nổi tiếng</h4>
+                                                <Link class="btn btn-yellow" to="/blog/40-gio-kham-pha-du-lich-ninh-thuan"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>
@@ -140,14 +156,14 @@ const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,dep
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/13.png" alt="blog"/>
+                                            <img src="../assets/img/blog/hon-dao-phu-quoc.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
-                                                <a class="tag" href="#fiel">Europe</a>
-                                                <p class="date">18 September 2019</p>
-                                                <h4 class="title">Rock Climbing Limestone Cliffs At Railay Beach</h4>
-                                                <a class="btn btn-yellow" href="#file"><span>Read More<i class="la la-arrow-right"></i></span></a>
+                                                <a class="tag" href="#fiel">Phú Quốc</a>
+                                                <p class="date">15/12/2020</p>
+                                                <h4 class="title">4 HÒN ĐẢO ĐẸP "NÍN THỞ" NỔI NHƯ CỒN TẠI PHÚ QUỐC</h4>
+                                                <Link class="btn btn-yellow" to="/blog/4-hon-dao-dep-nin-tho-noi-tieng-nhu-con-tai-phu-quoc"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>
@@ -155,14 +171,14 @@ const Home = ({history,islogin, setDestination, setDepartDate, setReturnDate,dep
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/14.png" alt="blog"/>
+                                            <img src="../assets/img/blog/maroc.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
-                                                <a class="tag" href="#file">Europe</a>
-                                                <p class="date">19 September 2019</p>
-                                                <h4 class="title">Magic In The Sky: Chasing Iceland’s Lights</h4>
-                                                <a class="btn btn-yellow" href="#file"><span>Read More<i class="la la-arrow-right"></i></span></a>
+                                                <a class="tag" href="#file">Ma Rốc</a>
+                                                <p class="date">19/12/2020</p>
+                                                <h4 class="title">LANG THANG XỨ SỞ 'NGHÌN LẺ MỘT ĐÊM'</h4>
+                                                <Link class="btn btn-yellow" to="/blog/lang-thang-xu-so-nghin-le-mot-dem"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>

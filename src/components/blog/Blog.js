@@ -14,6 +14,8 @@ class Blog extends Component {
                 <Header
                     history ={this.props.history}
                     islogin = {this.props.islogin}
+                    logout={() => this.props.logout()}
+                    allProvider = {this.props.allProvider}
                 />
                 <Breadcrumb name = 'Blog' />
                 <div class="blog-area pd-top-120">

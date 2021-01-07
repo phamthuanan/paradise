@@ -5,7 +5,7 @@ class ContentTour extends Component{
     constructor(props){
         super(props)
         this.state = {
-            pagination: [],
+            paginations: [],
             nameProvider : null
         }
     }
@@ -15,7 +15,7 @@ class ContentTour extends Component{
         for (let i = 1; i <= this.props.totalpage; i++) {
           tmp.push(i);
         }
-        this.setState({ pagination: tmp });
+        this.setState({ paginations: tmp });
       }
       componentWillReceiveProps(nextProps) {
         if (nextProps.totalpage !== this.props.totalpage) {
@@ -27,7 +27,7 @@ class ContentTour extends Component{
         }
       }
       renderPagination() {
-        if (this.state.pagination.length === 0) {
+        if (this.state.paginations.length === 0) {
           return null;
         } else {
           return (
@@ -35,7 +35,7 @@ class ContentTour extends Component{
               <li onClick={() => this.props.backPage()}>
                 <Link to="/tour">&laquo;</Link>
               </li>
-              {this.state.pagination.map((element, index) => {
+              {this.state.paginations.map((element, index) => {
                 if (this.props.page === element) {
                   return (
                     <li

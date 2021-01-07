@@ -6,7 +6,7 @@ import tourReducers from './tour.reducers'
 import providerReducers from './provider.reducers'
 import tourDetailReducers from './tourDetail.reducers'
 import bookingReducers from './booking.reducers'
-
+import blogReducers from './blog.reducers'
 export default combineReducers({
     userReducers,
     profileReducers,
@@ -14,5 +14,6 @@ export default combineReducers({
     tourReducers,
     providerReducers,
     tourDetailReducers,
-    bookingReducers
+    bookingReducers,
+    blogReducers
 })

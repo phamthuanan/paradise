@@ -52,3 +52,13 @@ export const tourDetailTypes = {
 export const bookingTypes = {
     SET_BOOKING : 'SET_BOOKING'
 }
+
+export const blogTypes = {
+    SET_BLOG_CATEGORY : 'SET_BLOG_CATEGORY',
+    SET_BLOG : 'SET_BLOG',
+    SET_NEW_POST : 'SET_NEW_POST',
+    SET_BLOG_DETAIL : 'SET_BLOG_DETAIL',
+    SET_BLOG_REALTED : 'SET_BLOG_REALTED',
+    SET_PAGE : 'SET_PAGE',
+    SET_TOTAL_PAGE : 'SET_TOTAL_PAGE'
+}

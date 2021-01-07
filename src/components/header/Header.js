@@ -35,7 +35,7 @@ class Header extends Component{
         if (this.props.islogin) {
           return (
             <li className="notification">
-                    <img src ={storeConfig.getUser().avatar} alt="avatar" className='avatar-account '/>                  
+                    <img src ={ "http://localhost:8080/avatar/" + storeConfig.getUser().avatar} alt="avatar" className='avatar-account '/>                  
                     <ul className = 'sub-profile'>
                         <li  onClick={() => {
                                     this.props.history.push("/profile/" + this.state.email);

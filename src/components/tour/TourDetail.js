@@ -35,7 +35,7 @@ class TourDetail extends Component {
                                                     key = {index}>
                                                     <img
                                                     className="d-block w-100"
-                                                    src={item.images}
+                                                    src={"http://localhost:8080/tour/" + item.images}
                                                     alt="First slide"
                                                     />
                                                 </Carousel.Item>
@@ -131,7 +131,7 @@ class TourDetail extends Component {
                                                             </div>
                                                             <div className="line-schedue" style={{borderRight: "solid gray 2px"}}></div>
                                                             <div class="thumb col-xl-3">
-                                                                <img src={item.images} alt="blog"/>
+                                                                <img src={"http://localhost:8080/tour/" + item.images} alt="blog"/>
                                                             </div>
                                                             <div class="single-blog-details col-xl-7">
                                                                 <h4 class="title">{item.title}</h4>

@@ -135,7 +135,7 @@ const BookingTour = (
                                         <h3>Thông tin Tour</h3>
                                     </div>
                                     <div className="col-md-3 col-xl-3">
-                                        <img src={tourDetail.image_cover} alt="img-tour" className="img-tour-booking"/>
+                                        <img src={"http://localhost:8080/tour/" + tourDetail.image_cover} alt="img-tour" className="img-tour-booking"/>
                                     </div>
                                     <div className="col-md-9 col-xl-9">
                                         <div className="name-tour">

@@ -191,8 +191,8 @@ class UserProfile extends Component{
                                                 <h3 class="user-details-title">Thông tin cá nhân</h3>
                                                 <div class="tp-img-upload">
                                                     <div class="tp-avatar-preview">
-                                                        <div id="tp_imagePreview" style={{backgroundImage: `url(${storeConfig.getUser().avatar})`}}>
-                                                        </div>
+                                                          <img src = {"http://localhost:8080/avatar/" +storeConfig.getUser().avatar} alt = "avatar" style = {{width: '192px', height : '192px'}}/>   
+                                                        
                                                     </div>
                                                     <div class="tp-avatar-edit">
                                                         <input type='file' id="tp_imageUpload" accept=".png, .jpg, .jpeg" onChange = {(event) => this.props.setFile(event.target.files[0])}/>
@@ -271,7 +271,7 @@ class UserProfile extends Component{
                                                                 <div class="col-sm-6">
                                                                     <div class="single-destinations-list style-two">
                                                                         <div class="thumb">
-                                                                            <img src={this.state.tours[index].image_cover} alt="list" />
+                                                                            <img src={"http://localhost:8080/tour/" + this.state.tours[index].image_cover} alt="list" />
                                                                             </div>
                                                                             <div class="details">
                                                                                 <p class="location"><img src="../assets/img/icons/1.png" alt="map"/>{this.state.tours[index].place_depart}</p>

@@ -162,8 +162,6 @@ class DesignTourContainer extends Component{
         }
         else{
             return( <Redirect to={"/"} /> ) 
-                
-                
         }
        
     }

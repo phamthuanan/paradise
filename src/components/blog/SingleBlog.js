@@ -13,7 +13,7 @@ class SingleBlog extends Component {
                     <p class="date">{(new Date(this.props.datepost).getDate()) + "/" + (new Date(this.props.datepost).getMonth() + 1) + "/" + (new Date(this.props.datepost).getFullYear())}</p>
                     <h4 class="title"><Link to={"/blog/" + this.props.id}>{this.props.nameBlog}</Link></h4>
                     <p class="content">{this.props.intro}</p>
-                    <Link class="btn-read-more" href={"/blog/" + this.props.id}><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
+                    <Link class="btn-read-more" to = {"/blog/" + this.props.id}><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                 </div>
             </div>
         )

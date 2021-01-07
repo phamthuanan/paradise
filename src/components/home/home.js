@@ -1,6 +1,5 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
 import Header from '../header/Header'
 import Banner from './Banner'
 import SearchTour from './SeacrhTour'
@@ -110,14 +109,14 @@ const Home = ({history,islogin,logout, setDestination, setDepartDate, setReturnD
                         <div class="col-lg-6">
                             <div class="single-blog single-blog-wrap style-two">
                                 <div class="thumb single-blog-left-wrap">
-                                    <img src="../assets/img/blog/gia-tri-van-hoa-pho-co-hoi-an.jpg" alt="blog"/>
+                                    <img src= "http://localhost:8080/blog/gia-tri-van-hoa-pho-co-hoi-an.jpg" alt="blog"/>
                                 </div>
                                 <div class="single-blog-details single-blog-right-wrap">
                                     <a class="tag" href="#e">Hội An</a>
                                     <p class="date">19/12/2020</p>
                                     <h4 class="title">Du lịch Hội An khám phá giá trị văn hóa khu phố cổ</h4>
                                     <p class="content">Kể từ khi Khu phố cổ Hội An được UNESCO công nhận là di sản văn hóa thế giới, Hội An trở thành một trong những điểm đến hấp dẫn nhất khu vực miền Trung. Du lịch Hội An làm say đắm lòng du khách bởi nét đẹp trường tồn cùng thời gian của các công trình kiến trúc, món ăn truyền thống, tâm hồn mộc mạc của người dân ở đây.</p>
-                                    <Link class="btn btn-yellow" to="/blog/du-lich-hoi-an-kham-pha-pho-co"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
+                                    <Link class="btn btn-yellow" to="blog/5ff5c1ca6d6c19ef7906507b"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                 </div>
                             </div>
                         </div>
@@ -126,14 +125,14 @@ const Home = ({history,islogin,logout, setDestination, setDepartDate, setReturnD
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/10-dia-diem.jpg" alt="blog"/>
+                                            <img src="http://localhost:8080/blog/10-dia-diem.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
                                                 <a class="tag" href="#e">Thế giới</a>
                                                 <p class="date">16/10/2020</p>
                                                 <h4 class="title">10 ĐIỂM ĐẾN HẤP DẪN NHẤT THẾ GIỚI</h4>
-                                                <Link class="btn btn-yellow" to="/blog/10-diem-hap-dan-nhat-the-gioi"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
+                                                <Link class="btn btn-yellow" to="/blog/5ff5d07bf378d736f7ebb4e1"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>
@@ -141,14 +140,14 @@ const Home = ({history,islogin,logout, setDestination, setDepartDate, setReturnD
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/48-gio-du-lich-ninh-thuan-vinh-vinh-hy.jpg" alt="blog"/>
+                                            <img src="http://localhost:8080/blog/48-gio-du-lich-ninh-thuan-vinh-vinh-hy.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
                                                 <a class="tag" href="#fie">Ninh Thuận</a>
                                                 <p class="date">18/12/2020</p>
                                                 <h4 class="title">48 giờ khám phá những địa điểm du lịch Ninh Thuận nổi tiếng</h4>
-                                                <Link class="btn btn-yellow" to="/blog/40-gio-kham-pha-du-lich-ninh-thuan"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
+                                                <Link class="btn btn-yellow" to="blog/5ff5d3ccf378d736f7ebb4e2"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>
@@ -156,14 +155,14 @@ const Home = ({history,islogin,logout, setDestination, setDepartDate, setReturnD
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/hon-dao-phu-quoc.jpg" alt="blog"/>
+                                            <img src="http://localhost:8080/blog/hon-dao-phu-quoc.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
                                                 <a class="tag" href="#fiel">Phú Quốc</a>
                                                 <p class="date">15/12/2020</p>
                                                 <h4 class="title">4 HÒN ĐẢO ĐẸP "NÍN THỞ" NỔI NHƯ CỒN TẠI PHÚ QUỐC</h4>
-                                                <Link class="btn btn-yellow" to="/blog/4-hon-dao-dep-nin-tho-noi-tieng-nhu-con-tai-phu-quoc"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
+                                                <Link class="btn btn-yellow" to="/blog/5ff5e3cff378d736f7ebb4e3"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>
@@ -171,14 +170,14 @@ const Home = ({history,islogin,logout, setDestination, setDepartDate, setReturnD
                                 <div class="col-sm-6">
                                     <div class="single-blog style-three">
                                         <div class="thumb">
-                                            <img src="../assets/img/blog/maroc.jpg" alt="blog"/>
+                                            <img src="http://localhost:8080/blog/maroc.jpg" alt="blog"/>
                                         </div>
                                         <div class="single-blog-details-wrap">
                                             <div class="single-blog-details text-center">
                                                 <a class="tag" href="#file">Ma Rốc</a>
                                                 <p class="date">19/12/2020</p>
                                                 <h4 class="title">LANG THANG XỨ SỞ 'NGHÌN LẺ MỘT ĐÊM'</h4>
-                                                <Link class="btn btn-yellow" to="/blog/lang-thang-xu-so-nghin-le-mot-dem"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
+                                                <Link class="btn btn-yellow" to="/blog/5ff5ea86f378d736f7ebb4e4"><span>Xem thêm<i class="la la-arrow-right"></i></span></Link>
                                             </div>
                                         </div>
                                     </div>

@@ -25,7 +25,7 @@ class ContentProvider extends Component{
                                     </ul>
                                 </div>
                                 <div className="col-md-5">
-                                <img src={this.props.provider.images['0']} alt="images-info-company" className="img-info-company"/>
+                                <img src={"http://localhost:8080/provider/" + this.props.provider.images['0']} alt="images-info-company" className="img-info-company"/>
                                 </div>
                             </div>
                             <div className="row component-info-company">
@@ -33,7 +33,7 @@ class ContentProvider extends Component{
                                     <h1>Dịch vụ du lịch</h1>
                                 </div>
                                 <div className="col-md-5">
-                                <img src={this.props.provider.images['1']} alt="images-info-company" className="img-info-company"/>
+                                <img src={"http://localhost:8080/provider/" + this.props.provider.images['1']} alt="images-info-company" className="img-info-company"/>
                                 </div>
                                 <div className="col-md-7">
                                     <ul className='info-contact-company'>
@@ -66,7 +66,7 @@ class ContentProvider extends Component{
                                     
                                 </div>
                                 <div className="col-md-5">
-                                <img src={this.props.provider.images['2']} alt="images-info-company" className="img-info-company"/>
+                                <img src={"http://localhost:8080/provider/" + this.props.provider.images['2']} alt="images-info-company" className="img-info-company"/>
                                 </div>
                             </div>
                         </div>

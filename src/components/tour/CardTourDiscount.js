@@ -29,7 +29,7 @@ class CardTourDiscount extends Component{
             <div class="single-destinations-list text-center">
                 <div class="thumb">
                     <span class="d-list-tag">Khuyến mãi</span>
-                    <img src={this.props.image} alt="list" />
+                    <img src={ "http://localhost:8080/tour/" + this.props.image} alt="list" />
                     <div class="d-list-btn-wrap">
                         <div class="d-list-btn">
                             <Link class="btn btn-yellow" to={'/tour/' + this.props.id}>Đặt tour <i class="fa fa-paper-plane"></i></Link>

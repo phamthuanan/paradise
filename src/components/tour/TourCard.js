@@ -24,7 +24,7 @@ const TourCard = ({nameTour, departDate,capacity, price, image, placeDepart, id,
     return (
         <div class="single-destinations-list style-two">
             <div class="thumb">
-                <img src={image} alt="list" />
+                <img src={"http://localhost:8080/tour/" + image} alt="list" />
             </div>
             <div class="details">
                 <p class="location"><img src="../assets/img/icons/1.png" alt="map"/>{placeDepart}</p>
